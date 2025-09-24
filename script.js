@@ -4,10 +4,10 @@ const gameContainer = document.getElementById("game-container");
 const timeDisplay = document.getElementById("time");
 
 let score = 0;
-let timeLeft = 0; 
+let timeLeft = 0;
 let timer;
 var level = 0;
-let currentWidth = 600
+let currentWidth = 600;
 
 function moveBox() {
   // Game Container Size
@@ -28,14 +28,14 @@ function handleClick() {
   if (timeLeft > 0) {
     score++;
     scoreDisplay.textContent = score;
-    timeLeft++
+    timeLeft++;
     moveBox();
-    expandPlay(10);
-    
+    expandPlay(500);
   }
 }
 
-function endGame() { // Game Over
+function endGame() {
+  // Game Over
   targetBox.style.display = "none";
   alert("Game Over! Skor akhir: " + score);
 }
@@ -48,7 +48,7 @@ function startGame() {
 
   moveBox();
 
-    timer = setInterval(() => {
+  timer = setInterval(() => {
     timeLeft--;
     timeDisplay.textContent = timeLeft;
 
@@ -59,16 +59,13 @@ function startGame() {
   }, 1000);
 }
 
-
 function expandPlay(target) {
-  console.log("jalaaaaaaaannn");
-  let containerWidth = gameContainer.offsetWidth;
-  let containerHeight = gameContainer.offsetHeight;
-  containerWidth.style.width = `${currentWidth + target}px`
-  containerHeight.style.height = `${currentWidth + target}px`
+  const currentWidth = gameContainer.offsetWidth;
+  const currentHeight = gameContainer.offsetHeight;
 
+  gameContainer.style.width = `${currentWidth + target}px`;
+  gameContainer.style.height = `${currentHeight + target}px`;
 }
-
 
 targetBox.addEventListener("click", handleClick);
 
