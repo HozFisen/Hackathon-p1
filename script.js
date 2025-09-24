@@ -28,9 +28,8 @@ function handleClick() {
   if (timeLeft > 0) {
     score++;
     scoreDisplay.textContent = score;
-    timeLeft++;
     moveBox();
-    expandPlay(500);
+    expandPlay(10);
   }
 }
 
@@ -43,7 +42,7 @@ function endGame() {
 function startGame() {
   score = 0;
   scoreDisplay.textContent = score;
-  timeLeft = 30;
+  timeLeft = 10;
   timeDisplay.textContent = timeLeft;
 
   moveBox();
