@@ -1,32 +1,58 @@
-// Variable Set
 const targetBox = document.getElementById("target-box");
 const scoreDisplay = document.getElementById("score");
 const gameContainer = document.getElementById("game-container");
+const timeDisplay = document.getElementById("time");
 
 let score = 0;
+let timeLeft = 0; 
+let timer;
 
 function moveBox() {
-  // Game Container Size
   const containerWidth = gameContainer.offsetWidth;
   const containerHeight = gameContainer.offsetHeight;
-  const boxSize = targetBox.offsetWidth; // Box size
+  const boxSize = targetBox.offsetWidth;
 
-  // Set coordinates for next move.
   const randomX = Math.floor(Math.random() * (containerWidth - boxSize));
   const randomY = Math.floor(Math.random() * (containerHeight - boxSize));
 
-  // Moves the Box
   targetBox.style.left = `${randomX}px`;
   targetBox.style.top = `${randomY}px`;
 }
 
-// Handles user Input
 function handleClick() {
-  score++;
-  scoreDisplay.textContent = score;
-  moveBox();
+  if (timeLeft > 0) {
+    score++;
+    scoreDisplay.textContent = score;
+    moveBox();
+  }
 }
+
+function endGame() {
+  targetBox.style.display = "none";
+  alert("Game Over! Skor akhir: " + score);
+}
+
+function startGame() {
+  score = 0;
+  scoreDisplay.textContent = score;
+  timeLeft = 5;
+  timeDisplay.textContent = timeLeft;
+
+  moveBox();
+
+    timer = setInterval(() => {
+    timeLeft--;
+    timeDisplay.textContent = timeLeft;
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      endGame();
+    }
+  }, 1000);
+}
+
+
 
 targetBox.addEventListener("click", handleClick);
 
-moveBox();
+startGame();
