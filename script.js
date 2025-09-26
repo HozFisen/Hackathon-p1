@@ -12,8 +12,8 @@ const gameOverSound = new Audio('level-win-6416.mp3');
 
 // === Backsound Musik ===
 const backgroundMusic = new Audio('pixel-rush-8-bit-chiptune-background-music-410043.mp3');
-backgroundMusic.loop = true;    // Biar musik mengulang terus
-backgroundMusic.volume = 0.2;   // Volume musik latar (0.0 - 1.0)
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.2;
 
 // Atur volume efek suara
 clickSound.volume = 1.0;
@@ -22,19 +22,15 @@ gameOverSound.volume = 1.0;
 
 // === Variabel Game ===
 let score = 0;
-let timeLeft = 0;
+let timeLeft = 15;
 let timer = null;
-let startTime = 0;        // Untuk mencatat waktu mulai
-let currentBoxSize = 50;  // Ukuran awal kotak merah (px)
-let timerStarted = false; // Flag untuk cek apakah timer sudah berjalan
+let startTime = 0;
+let currentBoxSize = 50;
+let timerStarted = false; // untuk memastikan timer hanya mulai sekali
 
-// === Fungsi Izin Audio ===
-// Mengatasi browser yang memblokir autoplay audio
+// === Fungsi untuk mengizinkan audio di browser ===
 document.addEventListener('click', () => {
   backgroundMusic.play().catch(() => {});
-  backgroundMusic.pause();
-  backgroundMusic.currentTime = 0;
-
   clickSound.play().catch(() => {});
   clickSound.pause();
   clickSound.currentTime = 0;
@@ -56,8 +52,8 @@ function moveBox() {
 // === Fungsi Mulai Timer ===
 function startTimer() {
   if (!timerStarted) {
-    timerStarted = true; // Tandai bahwa timer sudah dimulai
-    startTime = Date.now(); // Catat waktu awal
+    timerStarted = true;
+    startTime = Date.now();
 
     timer = setInterval(() => {
       timeLeft--;
@@ -88,7 +84,7 @@ function handleClick() {
     // Kecilkan ukuran kotak
     currentBoxSize -= 5;
 
-    // Jika ukuran kotak sudah nol → Menang
+    // Jika ukuran kotak habis → Menang
     if (currentBoxSize <= 0) {
       targetBox.style.display = "none";
       clearInterval(timer);
@@ -100,17 +96,17 @@ function handleClick() {
 
       // Hitung waktu yang dipakai
       const endTime = Date.now();
-      const elapsedTime = ((endTime - startTime) / 1000).toFixed(2); // dalam detik
+      const elapsedTime = ((endTime - startTime) / 1000).toFixed(2);
 
       alert("Bang Jago Juara! Dengan waktu: " + elapsedTime + " detik");
       return;
     }
 
-    // Update ukuran kotak di layar
+    // Update ukuran kotak
     targetBox.style.width = `${currentBoxSize}px`;
     targetBox.style.height = `${currentBoxSize}px`;
 
-    // Pindahkan kotak
+    // Pindahkan kotak ke posisi baru
     moveBox();
   }
 }
@@ -119,9 +115,11 @@ function handleClick() {
 function endGame() {
   targetBox.style.display = "none";
 
-  // Stop musik latar dan mainkan suara game over
+  // Stop musik latar
   backgroundMusic.pause();
   backgroundMusic.currentTime = 0;
+
+  // Mainkan suara game over
   gameOverSound.play();
 
   alert("Game Over! Skor akhir: " + score);
@@ -130,11 +128,12 @@ function endGame() {
 // === Fungsi Mulai Game ===
 function startGame() {
   score = 0;
-  scoreDisplay.textContent = score;
   timeLeft = 15;
-  timeDisplay.textContent = timeLeft;
+  timerStarted = false;
   currentBoxSize = 50;
-  timerStarted = false; // Timer belum berjalan
+
+  scoreDisplay.textContent = score;
+  timeDisplay.textContent = timeLeft;
 
   targetBox.style.display = "block";
   targetBox.style.width = `${currentBoxSize}px`;
@@ -142,7 +141,7 @@ function startGame() {
 
   moveBox();
 
-  // Musik latar mulai dari awal
+  // Mainkan musik latar
   backgroundMusic.currentTime = 0;
   backgroundMusic.play();
 }
