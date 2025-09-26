@@ -8,11 +8,21 @@
   </head>
   <body>
     <h1>Click the Box!</h1>
-    <div id="game-container" style="position: relative;  border: 1px solid black;">
-      <div id="target-box" style="position: absolute; width: 50px; height: 50px; background: red;"></div>
+
+    <!-- Area Game -->
+    <div id="game-container">
+      <div id="target-box"></div>
     </div>
-    <p>Score: <span id="score">0</span></p>
-    <p>Time: <span id="time">10</span></p>
+
+    <!-- Score dan Timer -->
+    <div class="info">
+      <p>Score: <span id="score">0</span></p>
+      <p>Time: <span id="time">10</span></p>
+    </div>
+
+    <!-- Tombol Reset -->
+    <button id="reset-btn">Reset Game</button>
+
     <script src="script.js"></script>
   </body>
 </html>
